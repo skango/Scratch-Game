@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class ScratchCardEffectUI : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     public RawImage scratchImage;
     public float brushSize = 40f;
     private Texture2D writableTexture;
+    public bool invoked = false;
+    public UnityEvent OnScratch;
 
     void Start()
     {
@@ -39,6 +42,12 @@ public class ScratchCardEffectUI : MonoBehaviour, IPointerDownHandler, IDragHand
            
             float progress = CalculateScratchProgress();
             Debug.Log($"Scratch Progress: {progress * 100}%");
+
+            if (progress >= 1 && !invoked)
+            {
+                OnScratch.Invoke();
+                invoked = true;
+            }
             
         }
     }
