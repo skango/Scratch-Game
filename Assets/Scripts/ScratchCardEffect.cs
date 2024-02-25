@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class ScratchCardEffectUI : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
@@ -34,6 +35,11 @@ public class ScratchCardEffectUI : MonoBehaviour, IPointerDownHandler, IDragHand
         {
             Debug.LogError("The texture attached to the RawImage is not a Texture2D or is null.");
         }
+    }
+
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 
     void Update()
