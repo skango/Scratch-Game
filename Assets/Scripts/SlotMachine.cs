@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SlotMachine : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class SlotMachine : MonoBehaviour
     public Button spinButton; // Spin button to initiate the spinning
 
     private bool isSpinning = false; // Flag to indicate whether the reels are currently spinning
+    public UnityEvent OnSpinFinish;
 
     void Start()
     {
@@ -46,6 +49,11 @@ public class SlotMachine : MonoBehaviour
         }
     }
 
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+
     IEnumerator SpinAnimation()
     {
         // Implement your spinning animation here (e.g., rotating the reels)
@@ -57,6 +65,8 @@ public class SlotMachine : MonoBehaviour
 
         // Re-enable the spin button
         isSpinning = false;
-        spinButton.interactable = true;
+       // spinButton.interactable = true;
+        yield return new WaitForSeconds(2);
+        OnSpinFinish.Invoke();
     }
 }
